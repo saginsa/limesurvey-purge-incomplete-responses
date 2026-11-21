@@ -1,0 +1,340 @@
+# Russian translation of PurgeIncompleteResponses (LimeSurvey plugin)
+# This file is distributed under the same license as the plugin (GPL-3.0-or-later).
+msgid ""
+msgstr ""
+"Project-Id-Version: PurgeIncompleteResponses 1.1.0\n"
+"PO-Revision-Date: 2026-11-22 00:00+0000\n"
+"Last-Translator: saginsa\n"
+"Language-Team: Russian\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgid "Usage: %s"
+msgstr "Использование: %s"
+
+msgid "No permission to read settings"
+msgstr "Нет прав на чтение настроек"
+
+msgid "Delete responses"
+msgstr "Удалять ответы"
+
+msgid "On — cron runs permanently delete incomplete responses. Off — they only count what would be deleted (see \"Last run\" below)."
+msgstr "Вкл — запуски по cron удаляют незавершённые ответы безвозвратно. Выкл — только считают, что было бы удалено (итог — ниже, «Последний запуск»)."
+
+msgid "Default retention period"
+msgstr "Общий срок хранения"
+
+msgid "Apply to all surveys"
+msgstr "Применять ко всем опросам"
+
+msgid "On — incomplete responses are deleted in all active surveys except surveys with their own period. Off — only in surveys with their own period."
+msgstr "Вкл — незавершённые ответы удаляются во всех активных опросах, кроме опросов со своим сроком. Выкл — только в опросах со своим сроком."
+
+msgid "Default period"
+msgstr "Общий срок"
+
+msgid "Incomplete responses older than this period are deleted."
+msgstr "Незавершённые ответы старше этого срока удаляются."
+
+msgid "Advanced"
+msgstr "Дополнительно"
+
+msgid "Maximum responses per run"
+msgstr "Не больше ответов за один запуск"
+
+msgid "The rest is deleted by the next runs."
+msgstr "Остальное удалится при следующих запусках."
+
+msgid "Last run"
+msgstr "Последний запуск"
+
+msgid "Deletion"
+msgstr "Удаление"
+
+msgid "The age of a response is counted from its last saved page."
+msgstr "Возраст ответа считается от последней сохранённой страницы."
+
+msgid "No date stamp or anonymized survey: the age is counted from the start of the response; the first deletion happens one period after the period is set."
+msgstr "Отметки даты нет или опрос анонимный: возраст считается от начала ответа; первое удаление — через срок после того, как срок задан."
+
+msgid "The survey is not active — the period takes effect after activation."
+msgstr "Опрос не активен — срок заработает после активации."
+
+msgid "All surveys with their own period are listed on the plugin settings page (Configuration → Plugins)."
+msgstr "Все опросы со своим сроком — на странице настроек плагина (Конфигурация → Плагины)."
+
+msgid "Retention period for incomplete responses"
+msgstr "Срок хранения незавершённых ответов"
+
+msgid "The previous run has not finished yet, skipping."
+msgstr "Предыдущий запуск ещё не закончился, пропускаю."
+
+msgid "Errors: %s"
+msgstr "Ошибки: %s"
+
+msgid "survey deleted"
+msgstr "опрос удалён"
+
+msgid "default period (%s)"
+msgstr "общий срок (%s)"
+
+msgid "off (count only)"
+msgstr "выкл (только подсчёт)"
+
+msgid "on"
+msgstr "вкл"
+
+msgid "the age is counted from the start of the response — deletion starts after %1$s UTC; incomplete now: %2$s"
+msgstr "возраст считается от начала ответа — удаление начнётся после %1$s UTC; незавершённых сейчас: %2$s"
+
+msgid "would be deleted: %s"
+msgstr "было бы удалено: %s"
+
+msgid "deleted: %s"
+msgstr "удалено: %s"
+
+msgid "Surveys with their own period"
+msgstr "Опросы со своим сроком"
+
+msgid "A survey's own period always overrides the default period. \"Keep forever\" excludes a survey from the default period."
+msgstr "Свой срок всегда важнее общего. «Хранить бессрочно» исключает опрос из общего срока."
+
+msgid "Loading… (JavaScript is required)"
+msgstr "Загрузка… (нужен JavaScript)"
+
+msgid "Survey"
+msgstr "Опрос"
+
+msgid "Retention period"
+msgstr "Срок хранения"
+
+msgid "Incomplete now"
+msgstr "Незавершённых сейчас"
+
+msgid "None. All active surveys use the default period."
+msgstr "Нет. Все активные опросы живут по общему сроку."
+
+msgid "inactive"
+msgstr "не активен"
+
+msgid "new"
+msgstr "новый"
+
+msgid "will use the default period"
+msgstr "перейдёт на общий срок"
+
+msgid "Remove"
+msgstr "Убрать"
+
+msgid "Restore"
+msgstr "Вернуть"
+
+msgid "Add survey…"
+msgstr "Добавить опрос…"
+
+msgid "Add"
+msgstr "Добавить"
+
+msgid "Other active surveys use the default period: %1$s."
+msgstr "Остальные активные опросы — по общему сроку: %1$s."
+
+msgid "The default period is off: nothing is deleted in other active surveys."
+msgstr "Общий срок выключен: в остальных активных опросах ничего не удаляется."
+
+msgid "A survey's own period can also be set in its settings → \"Plugins\"."
+msgstr "Свой срок задаётся и в настройках опроса → «Плагины»."
+
+msgid "Review the changes"
+msgstr "Проверьте изменения"
+
+msgid "Counting the responses affected…"
+msgstr "Считаю, на какие ответы это повлияет…"
+
+msgid "Cancel"
+msgstr "Отмена"
+
+msgid "Save"
+msgstr "Сохранить"
+
+msgid "Close"
+msgstr "Закрыть"
+
+msgid "Save without the check"
+msgstr "Сохранить без проверки"
+
+msgid "Could not calculate the effect: %1$s. You can save without the check."
+msgstr "Не удалось посчитать последствия: %1$s. Можно сохранить без проверки."
+
+msgid "No changes."
+msgstr "Изменений нет."
+
+msgid "What changes"
+msgstr "Что меняется"
+
+msgid "%1$s incomplete responses (surveys: %2$s)"
+msgstr "незавершённых ответов: %1$s (опросов: %2$s)"
+
+msgid "Without these changes: %1$s."
+msgstr "Без этих изменений: %1$s."
+
+msgid "Deletion is off: the next run will only count %1$s and delete nothing."
+msgstr "Удаление выключено: ближайший запуск только посчитает — %1$s — и ничего не удалит."
+
+msgid "The next cron run will permanently delete %1$s."
+msgstr "Ближайший запуск по cron удалит безвозвратно: %1$s."
+
+msgid "At most %1$s per run, the rest by the next runs."
+msgstr "Не больше %1$s за запуск, остальное — при следующих запусках."
+
+msgid "The next run deletes nothing: there are no matching incomplete responses."
+msgstr "Ближайший запуск ничего не удалит: подходящих незавершённых ответов нет."
+
+msgid "Surveys being cleaned — what the next run would count or delete"
+msgstr "Опросы, которые чистятся, — сколько ближайший запуск посчитал бы или удалил"
+
+msgid "Surveys whose period changes — what the next run would count or delete"
+msgstr "Опросы, где меняется срок, — сколько ближайший запуск посчитал бы или удалил"
+
+msgid "Without changes"
+msgstr "Без изменений"
+
+msgid "After saving"
+msgstr "После сохранения"
+
+msgid "Responses"
+msgstr "Ответов"
+
+msgid "and %1$s more surveys (included in the totals)"
+msgstr "и ещё опросов: %1$s (в итоге учтены)"
+
+msgid "%1$s more surveys: nothing to delete now — %2$s"
+msgstr "ещё опросов: %1$s — удалять сейчас нечего: %2$s"
+
+msgid "Total for these surveys"
+msgstr "Итого по этим опросам"
+
+msgid "Cron is not running — deletion will not start until it is set up."
+msgstr "Cron не запускается — удаление не начнётся, пока его не настроят."
+
+msgid "Deletion starts with the next cron run — at about %1$s (in %2$s)."
+msgstr "Начнётся при ближайшем запуске по cron — около %1$s (через %2$s)."
+
+msgid "Cron runs every %1$s min. Last run at %2$s, next at about %3$s (in %4$s)."
+msgstr "Запуски по cron — каждые %1$s мин. Последний — в %2$s, ближайший — около %3$s (через %4$s)."
+
+msgid "less than a minute"
+msgstr "меньше минуты"
+
+msgid "%1$s min"
+msgstr "%1$s мин"
+
+msgid "Cron has never run this plugin — nothing is deleted or counted. Add a cron job (see README):"
+msgstr "Cron ещё ни разу не запускал плагин — ничего не удаляется и не считается. Добавьте задание cron (см. README):"
+
+msgid "Cron runs every %1$s min. Last run: %2$s UTC."
+msgstr "Запуски по cron — каждые %1$s мин. Последний — %2$s UTC."
+
+msgid "Cron has not run for a long time — check the cron job."
+msgstr "Cron давно не запускался — проверьте задание cron."
+
+msgid "Next run at about %s UTC."
+msgstr "Ближайший — около %s UTC."
+
+msgid "The plugin has not run yet."
+msgstr "Плагин ещё не запускался."
+
+msgid "%1$s — %2$s: period %3$s, responses: %4$s"
+msgstr "%1$s — %2$s: срок %3$s, ответов: %4$s"
+
+msgid "By survey"
+msgstr "По опросам"
+
+msgid "Count only, deletion is off. Incomplete responses that would be deleted: %1$s (surveys: %2$s)."
+msgstr "Только подсчёт, удаление выключено. Было бы удалено незавершённых ответов: %1$s (опросов: %2$s)."
+
+msgid "Incomplete responses deleted: %1$s (surveys: %2$s)."
+msgstr "Удалено незавершённых ответов: %1$s (опросов: %2$s)."
+
+msgid "Per-run limit reached; the rest will be deleted by the next runs."
+msgstr "Достигнут предел за запуск, остальное удалится при следующих запусках."
+
+msgid "starts deleting after %s UTC"
+msgstr "начнёт удалять после %s UTC"
+
+msgid "could not delete %s responses, stopped"
+msgstr "не удалось удалить ответов: %s, остановлено"
+
+msgid "submitted during the run and left untouched: %s"
+msgstr "отправлены во время запуска и не тронуты: %s"
+
+msgid "by date"
+msgstr "по дате"
+
+msgid "by checkpoints"
+msgstr "по засечкам"
+
+msgid "Keep forever"
+msgstr "Хранить бессрочно"
+
+msgid "Default period (%s)"
+msgstr "Общий срок (%s)"
+
+msgid "Default period (off — not deleted)"
+msgstr "Общий срок (выключен — не удаляются)"
+
+msgid "off"
+msgstr "выключен"
+
+msgid "forever"
+msgstr "бессрочно"
+
+msgid "1 hour"
+msgstr "1 час"
+
+msgid "3 hours"
+msgstr "3 часа"
+
+msgid "6 hours"
+msgstr "6 часов"
+
+msgid "12 hours"
+msgstr "12 часов"
+
+msgid "1 day"
+msgstr "1 день"
+
+msgid "2 days"
+msgstr "2 дня"
+
+msgid "3 days"
+msgstr "3 дня"
+
+msgid "5 days"
+msgstr "5 дней"
+
+msgid "7 days"
+msgstr "7 дней"
+
+msgid "14 days"
+msgstr "14 дней"
+
+msgid "30 days"
+msgstr "30 дней"
+
+msgid "60 days"
+msgstr "60 дней"
+
+msgid "90 days"
+msgstr "90 дней"
+
+msgid "180 days"
+msgstr "180 дней"
+
+msgid "365 days"
+msgstr "365 дней"
+
+msgid "%s h"
+msgstr "%s ч"

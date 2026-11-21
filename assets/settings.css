@@ -1,0 +1,12 @@
+#pir-rules .pir-table td, #pir-rules .pir-table th { vertical-align: middle; }
+#pir-rules .pir-col-period { width: 13em; }
+#pir-rules .pir-removed td { color: var(--bs-secondary-color, #6c757d); }
+#pir-rules .pir-removed td:first-child { text-decoration: line-through; }
+#pir-rules .pir-add .pir-add-survey { min-width: 22em; max-width: 40em; width: auto; flex: 1 1 22em; }
+#pir-rules .pir-add .pir-add-period { width: 13em; flex: 0 0 auto; }
+.pir-modal { position: fixed; inset: 0; z-index: 2000; background: rgba(0, 0, 0, .45); overflow-y: auto; padding: 1rem; }
+.pir-modal .modal-dialog { margin: 2rem auto; }
+/* Switches: a checked "On" (value=1) is an action and uses the admin theme primary colour; "Off" keeps the default dark style */
+#pluginsettings-PurgeIncompleteResponses .btn-check[value="1"]:checked + .btn {
+    background-color: var(--bs-primary); border-color: var(--bs-primary); color: #fff;
+}

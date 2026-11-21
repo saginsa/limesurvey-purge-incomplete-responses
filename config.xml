@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <metadata>
+        <name>PurgeIncompleteResponses</name>
+        <type>plugin</type>
+        <creationDate>2026-10-25</creationDate>
+        <lastUpdate>2026-11-22</lastUpdate>
+        <author>saginsa</author>
+        <authorUrl>https://github.com/saginsa</authorUrl>
+        <supportUrl>https://github.com/saginsa/limesurvey-purge-incomplete-responses/issues</supportUrl>
+        <version>1.1.0</version>
+        <license>GNU General Public License version 3 or later</license>
+        <description><![CDATA[Deletes incomplete (never submitted) responses, including "Resume later" drafts, once they are older than a retention period: a default period for all surveys and per-survey overrides. Runs from cron; shows what will be deleted before you save.]]></description>
+    </metadata>
+
+    <compatibility>
+        <version>7.0</version>
+    </compatibility>
+
+    <updaters disabled="disabled">
+    </updaters>
+</config>
