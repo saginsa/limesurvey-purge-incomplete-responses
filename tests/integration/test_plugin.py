@@ -123,10 +123,11 @@ def post_multipart(path, fields, file_field, filename, content):
     return http(path, b"".join(parts), {"Content-Type": "multipart/form-data; boundary=" + boundary})
 
 
-def login():
+def login(user=ADMIN, password=PASSWORD):
+    jar.clear()
     _, _, html, _ = http("/admin/authentication/sa/login")
     status, url, body, _ = post_form("/admin/authentication/sa/login", {
-        "YII_CSRF_TOKEN": csrf(html), "authMethod": "Authdb", "user": ADMIN, "password": PASSWORD,
+        "YII_CSRF_TOKEN": csrf(html), "authMethod": "Authdb", "user": user, "password": password,
         "loginlang": "default", "action": "login", "width": "1600", "login_submit": "login"})
     return "authentication/sa/logout" in body
 
@@ -437,9 +438,44 @@ check(old in ids(S_OWN) and report()["total"] == 0, "everything off: nothing del
 check(scalar("SELECT COUNT(*) FROM lime_plugin_settings WHERE plugin_id = %d AND `key` = 'checkpoints'"
              % plugin_id()) == "0", "checkpoints of surveys no longer cleaned are dropped")
 
+step("Survey settings: the period needs the permission to delete responses")
+LIMITED, LIMITED_PW = "limited", "Limited-test-2026"
+pw_hash = web_sh("php -r 'echo password_hash($argv[1], PASSWORD_DEFAULT);' %s" % LIMITED_PW).strip()
+sql("INSERT INTO lime_users (users_name, password, full_name, parent_id, lang, email, created, modified) "
+    "VALUES ('%s', '%s', 'Limited', 1, 'en', 'limited@example.com', NOW(), NOW());" % (LIMITED, pw_hash))
+uid = int(scalar("SELECT uid FROM lime_users WHERE users_name = '%s'" % LIMITED))
+perms = [("global", 0, "auth_db", 0, 1, 0, 0), ("survey", S_OWN, "survey", 0, 1, 0, 0),
+         ("survey", S_OWN, "surveysettings", 0, 1, 1, 0), ("survey", S_OWN, "responses", 0, 1, 1, 0)]
+for entity, eid, perm, c, r_, u, d in perms:
+    sql("INSERT INTO lime_permissions (entity, entity_id, uid, permission, create_p, read_p, update_p, delete_p, "
+        "import_p, export_p) VALUES ('%s', %d, %d, '%s', %d, %d, %d, %d, 0, 0)" % (entity, eid, uid, perm, c, r_, u, d))
+rule_before = own_rules().get(S_OWN)
+
+
+def post_survey_rule(sid, value):
+    _, _, html, _ = http("/surveyAdministration/rendersidemenulink/subaction/plugins/surveyid/%d" % sid)
+    # Same target as the survey settings form
+    return post_form("/admin/database/index/updatesurveylocalesettings", {
+        "YII_CSRF_TOKEN": csrf(html), "action": "updatesurveylocalesettings", "sid": str(sid),
+        "plugin[%s][rule]" % NAME: str(value)})
+
+
+check(login(LIMITED, LIMITED_PW), "logged in as a user with survey settings: update, responses: no delete")
+status, _, body, _ = http("/surveyAdministration/rendersidemenulink/subaction/plugins/surveyid/%d" % S_OWN)
+check(status == 200 and "permission to delete responses" in body
+      and not re.search(r'\sname="plugin\[%s\]\[rule\]"' % NAME, body),
+      "plugin tab of the survey shows the period read-only", status)
+post_survey_rule(S_OWN, 1)
+check(own_rules().get(S_OWN) == rule_before, "the user cannot change the period (stays %s)" % rule_before,
+      own_rules())
+check(login(), "logged in as admin")
+status, _, body, _ = http("/surveyAdministration/rendersidemenulink/subaction/plugins/surveyid/%d" % S_OWN)
+check(re.search(r'\sname="plugin\[%s\]\[rule\]"' % NAME, body), "admin sees the period selector")
+post_survey_rule(S_OWN, 24)
+check(own_rules().get(S_OWN) == 24, "admin changes the period through survey settings", own_rules())
+
 step("Interface language follows the admin's language")
 sql("UPDATE lime_users SET lang = 'ru' WHERE users_name = '%s'" % ADMIN)
-jar.clear()
 check(login(), "logged in again")
 status, _, body, _ = http(configure_url())
 check(status == 200 and ">Удалять ответы</label>" in body and ">Delete responses</label>" not in body,

@@ -15,8 +15,11 @@ msgstr ""
 msgid "Usage: %s"
 msgstr "Использование: %s"
 
-msgid "No permission to read settings"
-msgstr "Нет прав на чтение настроек"
+msgid "No permission to change settings"
+msgstr "Нет прав на изменение настроек"
+
+msgid "Changing it requires the permission to delete responses of this survey."
+msgstr "Чтобы изменить срок, нужно право на удаление ответов этого опроса."
 
 msgid "Delete responses"
 msgstr "Удалять ответы"

@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.1.1 — 2026-11-22
+
+Security fix.
+
+- A survey's own period can be changed in the survey settings only by users who may delete that survey's
+  responses. Before, the permission to edit survey settings was enough, so such a user could make the plugin
+  delete responses they were not allowed to delete. Without the permission the period is shown read-only.
+- The review window (preview of the changes) requires the permission to change settings, not only to read them.
+- Tests: static checks (PHP, translations, LimeSurvey coding standard, spelling) and Docker integration tests.
+
 ## 1.1.0 — 2026-11-22
 
 First public release.

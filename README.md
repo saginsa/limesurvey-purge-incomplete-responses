@@ -29,6 +29,8 @@ tables, exports and statistics. LimeSurvey has no built-in retention for them â€
 - **Complete responses are never deleted.** Both the selection and every `DELETE` have `submitdate IS NULL`,
   so a response submitted while the plugin runs stays.
 - **Per-run limit** (50 000 by default): a wrong setting cannot wipe millions of rows in one go.
+- **Permissions**: the plugin page needs the global permission to change settings; a survey's own period can be
+  changed in the survey settings only by users allowed to delete that survey's responses.
 - **One run at a time** (a database lock on MySQL/MariaDB and PostgreSQL).
 - Deletion is the same as the bulk delete on the Responses screen: the response, its timings and uploaded files,
   plus the "Resume later" record (`saved_control`), which the core leaves behind.

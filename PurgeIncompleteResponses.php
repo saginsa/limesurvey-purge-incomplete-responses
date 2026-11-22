@@ -122,9 +122,10 @@ class PurgeIncompleteResponses extends PluginBase
         }
         header('Content-Type: application/json; charset=utf-8');
         header('Cache-Control: no-store');
-        if (!Permission::model()->hasGlobalPermission('settings', 'read')) {
+        // The review window is part of saving the settings: same permission as saving
+        if (!Permission::model()->hasGlobalPermission('settings', 'update')) {
             http_response_code(403);
-            echo json_encode(array('error' => $this->t('No permission to read settings')), JSON_UNESCAPED_UNICODE);
+            echo json_encode(array('error' => $this->t('No permission to change settings')), JSON_UNESCAPED_UNICODE);
             App()->end();
         }
         $config = json_decode((string) App()->request->getParam('config'), true);
@@ -216,19 +217,36 @@ class PurgeIncompleteResponses extends PluginBase
             $help .= ' ' . $this->t('The survey is not active — the period takes effect after activation.');
         }
         $help .= ' ' . $this->t('All surveys with their own period are listed on the plugin settings page (Configuration → Plugins).');
+        $label = $this->t('Retention period for incomplete responses');
+        if (!$this->canChangeSurveyRule($sid)) {
+            // The period deletes responses: changing it needs the right to delete them, not only to edit settings
+            $current = $rule === null ? $this->commonOptionLabel() : $this->ruleLabel($rule);
+            $setting = array(
+                'type' => 'info',
+                'content' => '<div class="mb-3"><b>' . CHtml::encode($label) . ':</b> ' . CHtml::encode($current)
+                    . '<div class="form-text">' . $this->t('Changing it requires the permission to delete responses of this survey.', 'html')
+                    . '</div></div>',
+            );
+        } else {
+            $setting = array(
+                'type' => 'select',
+                'label' => $label,
+                'help' => $help,
+                'selectOptions' => array('minimumResultsForSearch' => -1),
+                'options' => array('default' => $this->commonOptionLabel()) + $this->ruleOptions($rule),
+                'current' => $rule === null ? 'default' : (string) $rule,
+            );
+        }
         $event->set("surveysettings.{$this->id}", array(
             'name' => get_class($this),
-            'settings' => array(
-                'rule' => array(
-                    'type' => 'select',
-                    'label' => $this->t('Retention period for incomplete responses'),
-                    'help' => $help,
-                    'selectOptions' => array('minimumResultsForSearch' => -1),
-                    'options' => array('default' => $this->commonOptionLabel()) + $this->ruleOptions($rule),
-                    'current' => $rule === null ? 'default' : (string) $rule,
-                ),
-            ),
+            'settings' => array('rule' => $setting),
         ));
+    }
+
+    /** The period leads to deleting responses: it takes the right to delete them */
+    private function canChangeSurveyRule($sid)
+    {
+        return Permission::model()->hasSurveyPermission((int) $sid, 'responses', 'delete');
     }
 
     public function newSurveySettings()
@@ -236,8 +254,14 @@ class PurgeIncompleteResponses extends PluginBase
         $event = $this->getEvent();
         $settings = $event->get('settings');
         if (is_array($settings) && array_key_exists('rule', $settings)) {
+            $sid = (int) $event->get('survey');
+            if (!$this->canChangeSurveyRule($sid)) {
+                // The core calls this with only the "survey settings: update" permission checked
+                $this->log(sprintf('Survey %d: period not changed, no permission to delete responses', $sid), CLogger::LEVEL_WARNING);
+                return;
+            }
             $this->dropIdleCheckpoints();
-            $this->setSurveyRule((int) $event->get('survey'), $settings['rule']);
+            $this->setSurveyRule($sid, $settings['rule']);
             $this->dropIdleCheckpoints();
         }
     }
