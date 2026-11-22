@@ -44,16 +44,16 @@ class PurgeIncompleteResponses extends PluginBase
     public $allowedPublicMethods = array();
 
     /** Selectable periods, in hours */
-    const PRESETS = array(1, 3, 6, 12, 24, 48, 72, 120, 168, 336, 720, 1440, 2160, 4320, 8760);
+    private const PRESETS = array(1, 3, 6, 12, 24, 48, 72, 120, 168, 336, 720, 1440, 2160, 4320, 8760);
     /** Default period until another one is chosen */
-    const DEFAULT_HOURS = 48;
+    private const DEFAULT_HOURS = 48;
     /** Responses deleted per query */
-    const BATCH = 1000;
+    private const BATCH = 1000;
     /** Checkpoints per retention period: boundary precision is 1/48 of the period (1 hour for 2 days) */
-    const CHECKPOINTS_PER_AGE = 48;
-    const LOCK_NAME = 'limesurvey_PurgeIncompleteResponses';
+    private const CHECKPOINTS_PER_AGE = 48;
+    private const LOCK_NAME = 'limesurvey_PurgeIncompleteResponses';
     /** Advisory lock key for PostgreSQL (crc32 of LOCK_NAME) */
-    const PG_LOCK_KEY = 1853184171;
+    private const PG_LOCK_KEY = 1853184171;
 
     /** Labels and help are set in getPluginSettings(), translated to the admin's language */
     protected $settings = array(
@@ -804,8 +804,14 @@ class PurgeIncompleteResponses extends PluginBase
     private function renderSchedule()
     {
         $s = $this->schedule();
-        $attrs = sprintf(' id="pir-schedule" data-last="%s" data-interval="%s" data-next="%s" data-late="%d" data-now="%d"',
-            $s['last'] ?? '', $s['interval'] ?? '', $s['next'] ?? '', $s['late'] ? 1 : 0, time());
+        $attrs = sprintf(
+            ' id="pir-schedule" data-last="%s" data-interval="%s" data-next="%s" data-late="%d" data-now="%d"',
+            $s['last'] ?? '',
+            $s['interval'] ?? '',
+            $s['next'] ?? '',
+            $s['late'] ? 1 : 0,
+            time()
+        );
         if ($s['last'] === null) {
             return '<div class="alert alert-danger mb-0"' . $attrs . '>'
                 . $this->t('Cron has never run this plugin — nothing is deleted or counted. Add a cron job (see README):', 'html')
@@ -942,22 +948,25 @@ class PurgeIncompleteResponses extends PluginBase
     /** Each preset is a separate string, so every language can use its own plural forms */
     private function hoursLabel($hours)
     {
-        switch ((int) $hours) {
-            case 1: return $this->t('1 hour');
-            case 3: return $this->t('3 hours');
-            case 6: return $this->t('6 hours');
-            case 12: return $this->t('12 hours');
-            case 24: return $this->t('1 day');
-            case 48: return $this->t('2 days');
-            case 72: return $this->t('3 days');
-            case 120: return $this->t('5 days');
-            case 168: return $this->t('7 days');
-            case 336: return $this->t('14 days');
-            case 720: return $this->t('30 days');
-            case 1440: return $this->t('60 days');
-            case 2160: return $this->t('90 days');
-            case 4320: return $this->t('180 days');
-            case 8760: return $this->t('365 days');
+        $labels = array(
+            1 => $this->t('1 hour'),
+            3 => $this->t('3 hours'),
+            6 => $this->t('6 hours'),
+            12 => $this->t('12 hours'),
+            24 => $this->t('1 day'),
+            48 => $this->t('2 days'),
+            72 => $this->t('3 days'),
+            120 => $this->t('5 days'),
+            168 => $this->t('7 days'),
+            336 => $this->t('14 days'),
+            720 => $this->t('30 days'),
+            1440 => $this->t('60 days'),
+            2160 => $this->t('90 days'),
+            4320 => $this->t('180 days'),
+            8760 => $this->t('365 days'),
+        );
+        if (isset($labels[(int) $hours])) {
+            return $labels[(int) $hours];
         }
         return sprintf($this->t('%s h'), (int) $hours);
     }
