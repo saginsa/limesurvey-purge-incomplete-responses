@@ -5,6 +5,8 @@ older than a retention period. A default period applies to all active surveys; a
 period or be kept forever. Runs from cron. Before you save the settings, it shows what will change and how many
 responses that affects.
 
+![Plugin settings: deletion on, default period 14 days, two surveys with their own period](docs/settings.png)
+
 *Русское описание — [ниже](#по-русски).*
 
 ## Why
@@ -23,6 +25,10 @@ tables, exports and statistics. LimeSurvey has no built-in retention for them �
 - **Schedule on the page**: last and next cron run; a warning if cron is not set up or stopped.
 - **Report of the last run** with per-survey numbers.
 - **Translated interface**: English and Russian; the admin's interface language is used.
+
+![Review window: what changes and how many incomplete responses the next run will delete, per survey](docs/review.png)
+
+*Screenshots: LimeSurvey 7.5.1 with demo data from the integration tests.*
 
 ## Safety
 
