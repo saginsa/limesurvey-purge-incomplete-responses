@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!-- The coding standard of LimeSurvey core (phpcs.ruleset.xml in LimeSurvey/LimeSurvey) -->
+<ruleset name="LimeSurveyPSR12">
+    <rule ref="PSR12">
+        <exclude name="PSR1.Classes.ClassDeclaration.MissingNamespace" />
+        <exclude name="Generic.Files.LineLength"/>
+    </rule>
+    <rule ref="Generic.Files.ByteOrderMark"/>
+    <file>../PurgeIncompleteResponses.php</file>
+</ruleset>

@@ -51,11 +51,19 @@ if grep -I -n -E '(BEGIN [A-Z ]*PRIVATE KEY|gh[pousr]_[A-Za-z0-9]{30,}|AKIA[0-9A
     | grep -v '^tests/' ; then bad "possible secrets"; else ok "no secrets"; fi
 if grep -I -n -E '\b10\.[0-9]+\.[0-9]+\.[0-9]+\b|\b192\.168\.[0-9]+\.[0-9]+' $files | grep -v '^tests/'; then bad "private IPs"; else ok "no private IPs"; fi
 
-# 6. Coding standard (optional): PSR-12 as in LimeSurvey core
+# 6. Coding standard of LimeSurvey core (optional locally, always in CI)
 if command -v phpcs >/dev/null; then
-    if phpcs --standard=PSR12 --warning-severity=0 PurgeIncompleteResponses.php; then ok "phpcs PSR12"; else bad "phpcs PSR12"; fi
+    if phpcs --standard=tests/phpcs.xml; then ok "phpcs (LimeSurvey PSR-12)"; else bad "phpcs (LimeSurvey PSR-12)"; fi
 else
     echo "skip  phpcs (not installed)"
+fi
+
+# 7. Spelling, with the LimeSurvey core settings (optional locally, always in CI)
+if command -v codespell >/dev/null; then
+    if codespell --builtin clear,rare --check-filenames PurgeIncompleteResponses.php assets README.md CHANGELOG.md config.xml tests; then
+        ok "codespell"; else bad "codespell"; fi
+else
+    echo "skip  codespell (not installed)"
 fi
 
 exit $fail

@@ -8,8 +8,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install gettext
-        run: sudo apt-get update && sudo apt-get install -y gettext
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          tools: phpcs
+      - name: Install gettext and codespell
+        run: sudo apt-get update && sudo apt-get install -y gettext codespell
       - name: Static checks
         run: tests/static.sh
   integration:
@@ -20,6 +24,8 @@ jobs:
         limesurvey: ["7.5.1+261007"]
     steps:
       - uses: actions/checkout@v4
+      - name: Install gettext
+        run: sudo apt-get update && sudo apt-get install -y gettext
       - name: LimeSurvey ${{ matrix.limesurvey }} + MySQL 8 in Docker
         run: tests/integration/run.sh
         env:
