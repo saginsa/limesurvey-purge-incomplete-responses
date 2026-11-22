@@ -85,6 +85,19 @@ table, e.g. `OPTIMIZE TABLE lime_responses_123456;` (needs free disk space about
 deliberately does not do this — it is a database maintenance task. On a test copy, a table with 41 % incomplete
 responses shrank from 204 MB to 120 MB after cleaning and rebuilding.
 
+## Tests
+
+- `tests/static.sh` — PHP syntax, `config.xml`, translations (every string is translated, `.mo` is up to date),
+  no secrets or private addresses; PSR-12 if `phpcs` is installed.
+- `tests/integration/run.sh` — LimeSurvey 7.5.1 and MySQL 8 in Docker (needs Docker and Python 3). Installs the
+  plugin from the release zip through "Upload & install", creates surveys of every kind (date stamp, no date stamp,
+  anonymized, own period, keep forever, file upload question), fills them with complete and incomplete responses
+  and drafts, and checks: complete responses are never touched, only old incomplete ones are deleted with their
+  drafts and files, the review window agrees with the run, the per-run limit, checkpoints, and the interface language.
+  `KEEP=1` leaves the containers running at http://localhost:8099/index.php/admin.
+
+Both run on GitHub Actions for every push.
+
 ## Translations
 
 Strings are in `PurgeIncompleteResponses.php` (`$this->t(...)`); translations live in

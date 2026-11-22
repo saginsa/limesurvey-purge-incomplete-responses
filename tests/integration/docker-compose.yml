@@ -1,0 +1,25 @@
+# Throwaway LimeSurvey + MySQL for tests/integration/run.sh. Credentials are test-only.
+name: pir-test
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: limesurvey
+      MYSQL_USER: limesurvey
+      MYSQL_PASSWORD: limesurvey
+      MYSQL_ROOT_PASSWORD: root
+    command: --default-time-zone=+00:00
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-proot"]
+      interval: 2s
+      timeout: 5s
+      retries: 60
+    tmpfs:
+      - /var/lib/mysql
+  web:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "${PIR_PORT:-8099}:80"

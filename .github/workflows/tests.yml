@@ -1,0 +1,26 @@
+name: tests
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  static:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install gettext
+        run: sudo apt-get update && sudo apt-get install -y gettext
+      - name: Static checks
+        run: tests/static.sh
+  integration:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        limesurvey: ["7.5.1+261007"]
+    steps:
+      - uses: actions/checkout@v4
+      - name: LimeSurvey ${{ matrix.limesurvey }} + MySQL 8 in Docker
+        run: tests/integration/run.sh
+        env:
+          LS_TAG: ${{ matrix.limesurvey }}
